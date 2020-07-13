@@ -14,5 +14,18 @@ public class GlobalExceptionHandler {
     public R error(Exception e){
         e.printStackTrace();
         return R.error().message("执行了全局异常处理");
+    }   
+    // 处理特定异常
+    @ExceptionHandler(ArithmeticException.class)
+    public R error(ArithmeticException e){
+        e.printStackTrace();
+        return R.error().message("执行了特定异常处理");
+    }   
+    
+    
+    @ExceptionHandler(GuliException.class)
+    public R error(GuliException e){
+        e.printStackTrace();
+        return R.error().code(e.getCode()).message(e.getMsg());
     }
 }

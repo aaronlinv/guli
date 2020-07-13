@@ -6,6 +6,7 @@ import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.entity.vo.TeacherQuery;
 import com.atguigu.eduservice.service.EduTeacherService;
 import com.atguigu.eduservice.service.impl.EduTeacherServiceImpl;
+import com.atguigu.servicebase.exceptionhandler.GuliException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -151,7 +152,11 @@ public class EduTeacherController {
     public R getTeacher(@PathVariable String id) {
         EduTeacher teacher = teacherService.getById(id);
         // 模拟异常 触发全局异常处理
-        // int a = 10 / 0;
+        try {
+            int a = 10 / 0;
+        } catch (Exception e) {
+            throw new GuliException(2001,"执行了自定义异常处理");
+        }
         return R.ok().data("teacher", teacher);
     }
 
