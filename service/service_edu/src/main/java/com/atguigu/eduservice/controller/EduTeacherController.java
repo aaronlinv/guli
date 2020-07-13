@@ -126,7 +126,8 @@ public class EduTeacherController {
 
     /**
      * 添加讲师
-     * @param eduTeacher 
+     *
+     * @param eduTeacher
      * @return
      */
     @PostMapping("addTeacher")
@@ -138,6 +139,28 @@ public class EduTeacherController {
             return R.error();
         }
 
+    }
+
+    /**
+     * 根据id 查询讲师
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("getTeacher/{id}")
+    public R getTeacher(@PathVariable String id) {
+        EduTeacher teacher = teacherService.getById(id);
+        return R.ok().data("teacher", teacher);
+    }
+
+    @PostMapping("updateTeacher")
+    public R updateTeacher(@RequestBody EduTeacher eduTeacher) {
+        boolean save = teacherService.updateById(eduTeacher);
+        if (save) {
+            return R.ok();
+        }else{
+            return R.error();
+        }
     }
 }
 
