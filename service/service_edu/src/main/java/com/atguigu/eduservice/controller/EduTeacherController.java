@@ -150,6 +150,8 @@ public class EduTeacherController {
     @GetMapping("getTeacher/{id}")
     public R getTeacher(@PathVariable String id) {
         EduTeacher teacher = teacherService.getById(id);
+        // 模拟异常 触发全局异常处理
+        // int a = 10 / 0;
         return R.ok().data("teacher", teacher);
     }
 
@@ -158,7 +160,7 @@ public class EduTeacherController {
         boolean save = teacherService.updateById(eduTeacher);
         if (save) {
             return R.ok();
-        }else{
+        } else {
             return R.error();
         }
     }
