@@ -3,12 +3,15 @@ package com.atguigu.eduservice.controller;
 
 import com.atguigu.commonutils.R;
 import com.atguigu.eduservice.entity.EduTeacher;
+import com.atguigu.eduservice.entity.vo.TeacherQuery;
 import com.atguigu.eduservice.service.EduTeacherService;
 import com.atguigu.eduservice.service.impl.EduTeacherServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -62,6 +65,7 @@ public class EduTeacherController {
      * 分页查询
      * current 当前页
      * limit 每页显示数目
+     *
      * @return
      */
     @GetMapping("pageTeacher/{current}/{limit}")
@@ -73,7 +77,51 @@ public class EduTeacherController {
         long total = pageTeacher.getTotal();
         List<EduTeacher> records = pageTeacher.getRecords();
 
-        return R.ok().data("total",total).data("rows",records);
+        return R.ok().data("total", total).data("rows", records);
+    }
+
+    /**
+     * 条件 分页查询
+     *
+     * @return
+     */
+    
+    // 加上了  @RequestBody 要使用@PostMapping 否者取不到值 
+    @PostMapping("pageTeacherCondition/{current}/{limit}")
+    public R pageTeacherCondition(@PathVariable("current") long current,
+                                  @PathVariable("limit") long limit,
+                                  @RequestBody(required = false) TeacherQuery teacherQuery) {
+        Page<EduTeacher> page = new Page<>(current, limit);
+
+        // 构建条件
+        QueryWrapper<EduTeacher> wrapper = new QueryWrapper<>();
+        // 取出Vo
+        String name = teacherQuery.getName();
+        Integer level = teacherQuery.getLevel();
+        String begin = teacherQuery.getBegin();
+        String end = teacherQuery.getEnd();
+
+        if (!StringUtils.isEmpty(name)) {
+            wrapper.like("name", name);
+        }
+        if (!StringUtils.isEmpty(level)) {
+            wrapper.eq("level", level);
+        }
+        if (!StringUtils.isEmpty(begin)) {
+            wrapper.ge("gmt_create", begin);
+        }
+        if (!StringUtils.isEmpty(end)) {
+            wrapper.le("gmt_create", end);
+        }
+
+
+        teacherService.page(page, wrapper);
+
+
+        long total = page.getTotal();
+        List<EduTeacher> records = page.getRecords();
+
+        return R.ok().data("total", total).data("rows", records);
     }
 }
 
