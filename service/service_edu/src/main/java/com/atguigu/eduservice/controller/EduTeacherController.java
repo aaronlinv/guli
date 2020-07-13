@@ -4,6 +4,8 @@ package com.atguigu.eduservice.controller;
 import com.atguigu.eduservice.entity.EduTeacher;
 import com.atguigu.eduservice.service.EduTeacherService;
 import com.atguigu.eduservice.service.impl.EduTeacherServiceImpl;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,7 @@ import java.util.List;
  * @author testjava
  * @since 2020-07-13
  */
+@Api(description="讲师管理")
 @RestController
 @RequestMapping("/eduservice/teacher")
 public class EduTeacherController {
@@ -27,6 +30,7 @@ public class EduTeacherController {
     /**查询所有
      * @return 
      */
+    @ApiOperation(value = "所有讲师列表")
     @GetMapping("findAll")
     public List<EduTeacher> list() {
         List<EduTeacher> list = teacherService.list(null);
@@ -38,6 +42,7 @@ public class EduTeacherController {
      * @param id 
      * @return
      */
+    @ApiOperation(value = "根据ID删除讲师")
     @DeleteMapping("{id}")
     public boolean removeTeacher(@PathVariable("id") String id) {
         boolean flag = teacherService.removeById(id);
