@@ -85,7 +85,7 @@ public class EduTeacherController {
      *
      * @return
      */
-    
+
     // 加上了  @RequestBody 要使用@PostMapping 否者取不到值 
     @PostMapping("pageTeacherCondition/{current}/{limit}")
     public R pageTeacherCondition(@PathVariable("current") long current,
@@ -122,6 +122,22 @@ public class EduTeacherController {
         List<EduTeacher> records = page.getRecords();
 
         return R.ok().data("total", total).data("rows", records);
+    }
+
+    /**
+     * 添加讲师
+     * @param eduTeacher 
+     * @return
+     */
+    @PostMapping("addTeacher")
+    public R addTeacher(@RequestBody EduTeacher eduTeacher) {
+        boolean save = teacherService.save(eduTeacher);
+        if (save) {
+            return R.ok();
+        } else {
+            return R.error();
+        }
+
     }
 }
 
