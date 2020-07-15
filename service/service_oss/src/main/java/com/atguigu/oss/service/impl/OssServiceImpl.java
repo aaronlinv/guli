@@ -11,6 +11,7 @@ import sun.reflect.misc.ConstructorUtil;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.UUID;
 
 @Service
 public class OssServiceImpl implements OssService {
@@ -31,8 +32,15 @@ public class OssServiceImpl implements OssService {
 
             // 获取文件名称
             String filename = file.getOriginalFilename();
-            PutObjectResult putObjectResult = ossClient.putObject(bucketName, filename, inputStream);
+            
+            // 随机唯一UUID
+            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+            
+            filename = uuid+filename;
+            
 
+            PutObjectResult putObjectResult = ossClient.putObject(bucketName, filename, inputStream);
+            
             // 关闭OSSClient
             ossClient.shutdown();
 
