@@ -116,7 +116,9 @@ public class EduTeacherController {
             wrapper.le("gmt_create", end);
         }
 
-
+        // 增加排序条件，方便添加后 第一个显示刚添加的数据
+        wrapper.orderByDesc("gmt_create");
+        
         teacherService.page(page, wrapper);
 
 
