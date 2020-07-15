@@ -1,5 +1,6 @@
 package com.atguigu.servicebase.exceptionhandler;
 
+import com.atguigu.commonutils.ExceptionUtil;
 import com.atguigu.commonutils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,7 +33,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(GuliException.class)
     public R error(GuliException e){
-        log.error(e.getMessage());
+        // 使用Exception工具类
+        log.error(ExceptionUtil.getMessage(e));
+        
         e.printStackTrace();
         return R.error().code(e.getCode()).message(e.getMsg());
     }
