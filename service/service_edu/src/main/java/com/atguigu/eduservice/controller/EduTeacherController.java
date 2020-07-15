@@ -152,12 +152,12 @@ public class EduTeacherController {
     @GetMapping("getTeacher/{id}")
     public R getTeacher(@PathVariable String id) {
         EduTeacher teacher = teacherService.getById(id);
-        // 模拟异常 触发全局异常处理
+/*        // 模拟异常 触发全局异常处理
         try {
             int a = 10 / 0;
         } catch (Exception e) {
             throw new GuliException(2001,"执行了自定义异常处理");
-        }
+        }*/
         return R.ok().data("teacher", teacher);
     }
 
