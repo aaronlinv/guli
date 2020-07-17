@@ -4,6 +4,7 @@ import com.alibaba.excel.EasyExcel;
 import com.atguigu.eduservice.entity.EduSubject;
 import com.atguigu.eduservice.entity.excel.SubjectData;
 import com.atguigu.eduservice.entity.subject.OneSubject;
+import com.atguigu.eduservice.entity.subject.TwoSubject;
 import com.atguigu.eduservice.listener.SubjectExcelListener;
 import com.atguigu.eduservice.mapper.EduSubjectMapper;
 import com.atguigu.eduservice.service.EduSubjectService;
@@ -77,17 +78,26 @@ public class EduSubjectServiceImpl extends ServiceImpl<EduSubjectMapper, EduSubj
             // oneSubject.setId(eduSubject.getId());
             // oneSubject.setTitle(eduSubject.getTitle());
 
-            
+
             // Spring包里
             BeanUtils.copyProperties(eduSubject, oneSubject);
-            
-            
+
+            // 封装二级分类
+            List<TwoSubject> twoFinalSubjectList = new ArrayList<>();
+            for (EduSubject tSubject : twoSubjectList) {
+                if (tSubject.getParentId().equals(eduSubject.getId())) {
+                    TwoSubject twoSubject = new TwoSubject();
+                    BeanUtils.copyProperties(tSubject, twoSubject);
+
+                    twoFinalSubjectList.add(twoSubject);
+                }
+
+
+            }
+            oneSubject.setChildren(twoFinalSubjectList);
             finalSubjectList.add(oneSubject);
         }
 
-
-        // 封装二级分类
-        
 
         return finalSubjectList;
     }
