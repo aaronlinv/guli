@@ -7,6 +7,7 @@ import com.atguigu.eduservice.entity.chapter.VideoVo;
 import com.atguigu.eduservice.mapper.EduChapterMapper;
 import com.atguigu.eduservice.service.EduChapterService;
 import com.atguigu.eduservice.service.EduVideoService;
+import com.atguigu.servicebase.exceptionhandler.GuliException;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
@@ -52,26 +53,48 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
             ChapterVo chapterVo = new ChapterVo();
             BeanUtils.copyProperties(eduChapter, chapterVo);
 
-            
-            
+
             finalList.add(chapterVo);
             // 4.遍历小节list 进行封装
             List<VideoVo> videoList = new ArrayList<>();
-            
+
             for (EduVideo eduVideo : eduVideoList) {
-                if(eduVideo.getChapterId().equals(eduChapter.getId())){
+                if (eduVideo.getChapterId().equals(eduChapter.getId())) {
                     VideoVo videoVo = new VideoVo();
-                    
+
                     BeanUtils.copyProperties(eduVideo, videoVo);
                     videoList.add(videoVo);
                 }
-                
+
             }
             chapterVo.setChildren(videoList);
-            
+
         }
 
 
         return finalList;
+    }
+
+    /**
+     * 删除章节，有小节不让删除该章节
+     *
+     * @param chapterId
+     * @return
+     */
+    @Override
+    public boolean deleteChapter(String chapterId) {
+        // 查询是否存在小节
+        QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
+        wrapper.eq("chapter_id", chapterId);
+        // 只需要知道有无，无需要获取到数据
+        int count = videoService.count(wrapper);
+        if (count > 0) {
+            // 存在小节 不能删除
+            throw new GuliException(20001, "存在小节，不能删除该章节");
+        } else {
+            int result = baseMapper.deleteById(chapterId);
+            return result > 0 ;
+        }
+        
     }
 }
