@@ -38,7 +38,7 @@ public class EduCourseController {
 
         CourseInfoVo courseInfoVo = courseService.getCourseInfo(courseId);
 
-        return R.ok().data("courseInfoVo", courseId);
+        return R.ok().data("courseInfoVo", courseInfoVo);
     }
 
     // 修改课程信息
