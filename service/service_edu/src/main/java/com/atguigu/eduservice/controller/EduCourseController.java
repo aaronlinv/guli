@@ -32,5 +32,14 @@ public class EduCourseController {
         return R.ok().data("courseId",id);
     }
 
+    // 根据课程id 查询课程基本信息
+    @GetMapping("getCourseInfo/{courseId}")
+    public R getCourseInfo(@PathVariable("courseId")String courseId){
+
+        CourseInfoVo  courseInfoVo= courseService.getCourseInfo(courseId);
+
+        return R.ok().data("courseInfoVo",courseId);
+    }
+
 }
 
