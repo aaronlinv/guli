@@ -21,7 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/eduservice/course")
-@CrossOrigin
+@CrossOrigin    
 public class EduCourseController {
     @Autowired
     private EduCourseService courseService;
@@ -82,6 +82,13 @@ public class EduCourseController {
         return R.ok().data("list",list);
     }
     
+    // 删除课程
+    @DeleteMapping("{courseId}")
+    public R deleteCourse(@PathVariable("courseId")String courseId){
+        courseService.removeCourse(courseId);
+        return  R.ok(); 
+                
+    }
     
 }
 
