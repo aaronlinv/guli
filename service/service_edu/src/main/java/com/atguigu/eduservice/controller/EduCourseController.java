@@ -9,6 +9,8 @@ import com.atguigu.eduservice.service.EduCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 课程 前端控制器
@@ -69,6 +71,17 @@ public class EduCourseController {
         courseService.updateById(eduCourse);
         return R.ok();
     }
+    
+    // 课程列表分页查询
+    // todo
+    
+    // 查询所有课程
+    @GetMapping
+    public R getCourseList(){
+        List<EduCourse> list = courseService.list(null);
+        return R.ok().data("list",list);
+    }
+    
     
 }
 
