@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 // 要调用的服务名称
-@FeignClient("service-vod")
+
+@FeignClient(name = "service-vod",fallback = VodFileDegradeFeignClient.class)
 @Component
 public interface VodClient {
     // 定义调用方法的路径
