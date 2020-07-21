@@ -22,7 +22,7 @@ public class BannerFrontController {
     
     // 查询所有banner
     // key 里面需要加''
-    // @Cacheable(value = "banner",key="'selectIndexList'")
+    @Cacheable(value = "banner", key = "'selectIndexList'")
     @GetMapping("getAllBanner")
     public R getAllBanner(){
         List<CrmBanner> list=  bannerService.selectAllBanner();
