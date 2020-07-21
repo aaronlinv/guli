@@ -4,10 +4,12 @@ import com.atguigu.commonutils.R;
 import com.atguigu.educms.entity.CrmBanner;
 import com.atguigu.educms.service.CrmBannerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
 
@@ -19,6 +21,8 @@ public class BannerFrontController {
     private CrmBannerService bannerService;
     
     // 查询所有banner
+    // key 里面需要加''
+    // @Cacheable(value = "banner",key="'selectIndexList'")
     @GetMapping("getAllBanner")
     public R getAllBanner(){
         List<CrmBanner> list=  bannerService.selectAllBanner();
