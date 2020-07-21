@@ -3,6 +3,7 @@ package com.atguigu.educenter.controller;
 
 import com.atguigu.commonutils.R;
 import com.atguigu.educenter.entity.UcenterMember;
+import com.atguigu.educenter.entity.vo.RegisterVo;
 import com.atguigu.educenter.service.UcenterMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,11 @@ public class UcenterMemberController {
     }
     
     // 注册
-    
+    @PostMapping("register")
+    public R registerUser(@RequestBody RegisterVo registerVo){
+        memberService.register(registerVo);
+        return R.ok();
+    }
     
 }
 
