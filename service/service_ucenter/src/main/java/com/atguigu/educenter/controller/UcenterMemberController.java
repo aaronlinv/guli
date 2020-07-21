@@ -1,9 +1,11 @@
 package com.atguigu.educenter.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import com.atguigu.commonutils.R;
+import com.atguigu.educenter.entity.UcenterMember;
+import com.atguigu.educenter.service.UcenterMemberService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -14,8 +16,24 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020-07-21
  */
 @RestController
-@RequestMapping("/educenter/ucenter-member")
-public class UcenterMemberController {
+@RequestMapping("/educenter/member")
+@CrossOrigin
 
+public class UcenterMemberController {
+    @Autowired 
+    private UcenterMemberService memberService;
+    
+
+    // 登录
+    @PostMapping("login")
+    public R login(@RequestBody UcenterMember member){
+        
+        String token = memberService.login(member);
+        return R.ok().data("token",token);
+    }
+    
+    // 注册
+    
+    
 }
 
