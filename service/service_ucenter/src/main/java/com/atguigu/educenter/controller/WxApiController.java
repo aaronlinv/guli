@@ -1,5 +1,6 @@
 package com.atguigu.educenter.controller;
 
+import com.atguigu.commonutils.JwtUtils;
 import com.atguigu.commonutils.R;
 import com.atguigu.educenter.entity.UcenterMember;
 import com.atguigu.educenter.service.UcenterMemberService;
@@ -119,10 +120,12 @@ public class WxApiController {
                 memberService.save(member);
 
             }
+            // 使用JWT 根据member 生成token
+            String token = JwtUtils.getJwtToken(member.getId(), member.getNickname());
+
+            // 通过路径传递
             
-            
-            
-            return "redirect:http://localhost:3000";
+            return "redirect:http://localhost:3000?token="+token;
 
         } catch (Exception e) {
             e.printStackTrace();
