@@ -48,4 +48,14 @@ public class WxApiController {
         // 重定向到微信
         return "redirect:" + url;
     }
+    @GetMapping("callback")
+    public String callback(String code ,String state){
+        System.out.println("code == >"+code);
+        System.out.println("state == >"+ state);
+        
+        
+        
+        
+        return "redirect:http://localhost:3000";
+    }
 }
