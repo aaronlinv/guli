@@ -46,7 +46,8 @@ public class PayLogController {
             payLogService.updateOrdersStatus(map);
             return R.ok().message("支付成功");
         }
-        return R.ok().message("支付中");
+        // 前端response拦截：25000 表示支付中
+        return R.ok().message("支付中").code(25000);
         
     }
 }
