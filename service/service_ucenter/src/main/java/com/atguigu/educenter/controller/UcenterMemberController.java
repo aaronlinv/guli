@@ -3,9 +3,11 @@ package com.atguigu.educenter.controller;
 
 import com.atguigu.commonutils.JwtUtils;
 import com.atguigu.commonutils.R;
+import com.atguigu.commonutils.vo.UcenterMemberPay;
 import com.atguigu.educenter.entity.UcenterMember;
 import com.atguigu.educenter.entity.vo.RegisterVo;
 import com.atguigu.educenter.service.UcenterMemberService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,5 +53,16 @@ public class UcenterMemberController {
         UcenterMember member = memberService.getById(memberId);
         return  R.ok().data("userInfo",member);
     }
+    
+    // 根据id查询用户
+    @GetMapping("getInfoUc/{id}")
+    public UcenterMemberPay getMemberInfo(@PathVariable("id")String memberId){
+        
+        UcenterMember member = memberService.getById(memberId);
+        UcenterMemberPay ucenterMemberPay = new UcenterMemberPay();
+        BeanUtils.copyProperties(member, ucenterMemberPay);
+        return ucenterMemberPay ;
+    }
+    
 }
 
