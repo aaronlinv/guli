@@ -8,6 +8,7 @@ import com.atguigu.commonutils.vo.UcenterMemberPay;
 import com.atguigu.educenter.entity.UcenterMember;
 import com.atguigu.educenter.entity.vo.RegisterVo;
 import com.atguigu.educenter.service.UcenterMemberService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -76,6 +77,13 @@ public class UcenterMemberController {
         BeanUtils.copyProperties(member, ucenterMemberOrder);
         return ucenterMemberOrder;  
 
+    }
+    
+    // 查询某一天的注册人数
+    @GetMapping("countRegister/{day}")
+    public R  countRegister(@PathVariable("day")String day){
+        Integer count = memberService.countRegister(day);
+        return R.ok().data("countRegister",count);
     }
 
 }
