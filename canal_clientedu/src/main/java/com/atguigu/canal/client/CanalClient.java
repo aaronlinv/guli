@@ -31,8 +31,8 @@ public class CanalClient {
      * canal入库方法
      */
     public void run() {
-
-        CanalConnector connector = CanalConnectors.newSingleConnector(new InetSocketAddress("192.168.44.132",
+        // 地址为虚拟机Canal地址 端口默认11111
+        CanalConnector connector = CanalConnectors.newSingleConnector(new InetSocketAddress("192.168.43.136",
                 11111), "example", "", "");
         int batchSize = 1000;
         try {
